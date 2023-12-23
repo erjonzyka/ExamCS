@@ -1,0 +1,35 @@
+@model Hobby
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="text-center">
+        <h1>Create a Hobby</h1>
+    </div>
+
+    <form method="post" asp-action="AddHobby" asp-controller="Home">
+  <div class="form-group">
+    <label asp-for="@Model.Name"></label>
+    <input asp-for="@Model.Name" class="form-control" aria-describedby="emailHelp"> 
+    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+  </div>
+
+  <div class="form-group">
+    <label asp-for="@Model.Description">Description:</label>
+    <textarea class="form-control" asp-for="@Model.Description" rows="3"></textarea>
+    <span asp-validation-for="@Model.Description" class="text-danger"></span>
+  </div>
+  <input type="hidden" value="@HttpContextAccessor.HttpContext.Session.GetInt32("UserId")" asp-for="@Model.CreatorId">
+  <input type="submit" class="btn btn-primary mt-5" value="Create">
+</form>
+
+
+</body>
+</html>

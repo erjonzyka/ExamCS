@@ -1,0 +1,28 @@
+@model Proficency
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Become an Enthusiast!</h2>
+    <form method="post" asp-action="AddEnth" asp-controller="Home" asp-route-id="@ViewBag.HobbyId">
+        <div class="form-group">
+        <select class="form-control" asp-for="@Model.Level">
+      <option value="Novice">Novice</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Expert">Expert</option>
+        </select>
+        <span asp-validation-for="@Model.Level" class="text-danger"></span>
+    </div>
+    
+    <input type="hidden" asp-for="@Model.EnthusiastId" value="@HttpContextAccessor.HttpContext.Session.GetInt32("UserId")">
+    <input type="submit" class="btn btn-success mt-3" value="Add to Hobbies">
+</form>
+</body>
+</html>

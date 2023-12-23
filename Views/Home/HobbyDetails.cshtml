@@ -1,0 +1,75 @@
+@model PartialsDataFirst
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" action="#">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("UserName")</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="LogOut" class="nav-link text-dark">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+<body>
+    <h1>@Model.Hobby.Name</h1>
+    <div class="row mb-5">
+        <h3>Description:</h3>
+        <p>@Model.Hobby.Description</p>
+    </div>
+    <a asp-action="EditHobby" asp-controller="Home" asp-route-id="@Model.Hobby.HobbyId" class="btn btn-primary mb-5">Edit Hobby</a>
+    <div class="d-flex justify-content-around">
+    <div class="col-6 mt-5">
+        <h2>@Model.Hobby.Name Enthusiasts</h2>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+
+                    <th scope="col">Name</th>
+                    <th scope="col">Proficency</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Hobby.Proficencies)
+                {
+                    <tr>
+                        <td>@item.Enthusiast.FirstName</td>
+                        <td>@item.Level</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col-5 mt-5">
+        @await Html.PartialAsync("_Enroll", Model.Proficency)
+    </div>
+    </div>
+</body>
+
+</html>
